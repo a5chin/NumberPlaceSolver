@@ -16,7 +16,8 @@ pip install -r requirements.txt
 ```zsh
 python3 main.py
 ```
-or visit `demo.ipynb`
+or visit [demo.ipynb](demo.ipynb)
+
 <img alt='result.png' src='assets/result.png' width='100%'>
 </details>
 
