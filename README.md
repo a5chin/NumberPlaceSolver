@@ -17,7 +17,7 @@ pip install -r requirements.txt
 python3 main.py
 ```
 or visit `demo.ipynb`
-<img alt='result.png' src='assets/result.png' >
+<img alt='result.png' src='assets/result.png' width='100%'>
 </details>
 
 <details>
