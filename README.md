@@ -1,5 +1,5 @@
 # Quick Start
-<img alt='result.png' src='assets/result.png' >
+<img alt='result.png' src='assets/result.png' width='100%'>
 <details>
 <summary>Installation</summary>
 
