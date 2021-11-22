@@ -1,5 +1,7 @@
-# Quick Start
+# NumberPlaceSolver
 <img alt='result.png' src='assets/result.png' width='100%'>
+
+## Quick Start
 <details>
 <summary>Installation</summary>
 
