@@ -31,10 +31,10 @@ or visit [demo.ipynb](demo.ipynb)
 python3 tools/train.py
 tensorboard --logdir logs
 ```
-## Accuracy
+### Accuracy
 <img alt='assets/acc.png' src='assets/acc.png' width='100%' >
 
-## Loss
+### Loss
 <img alt='assets/loss.png' src='assets/loss.png' width='100%' >
 </details>
 
