@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Optional
 from datetime import datetime
 
-from .transforms import get_transforms
+from lib.core.transforms import get_transforms
 from lib.dataset import NumberPlaceDataset
 from lib.model import get_resnet
 

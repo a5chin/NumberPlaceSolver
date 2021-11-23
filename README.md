@@ -32,7 +32,8 @@ python3 tools/train.py
 tensorboard --logdir logs
 ```
 
-<img alt='assets/acc.png' src='assets/acc.png' width='50%' ><img alt='assets/loss.png' src='assets/loss.png' width='50%' >
+<img alt='assets/acc.png' src='assets/acc.png' width='100%' >
+<img alt='assets/loss.png' src='assets/loss.png' width='100%' >
 </details>
 
 <details>
