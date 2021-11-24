@@ -16,8 +16,8 @@ def draw_rect(img: np.array, eps: int=2) -> np.array:
 class NumberPlaceDataset(ImageFolder):
     def __init__(
         self,
-        root: str='/Users/a5/PycharmProjects/NumberPlace/data/NumberPlaceDataset',
-        transform: Optional[Callable] = None,
+        root: str='../data/NumberPlaceDataset',
+        transform: Optional[Callable] = None
     ):
         super().__init__(root, transform)
         self.root = root
