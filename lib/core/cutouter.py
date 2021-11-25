@@ -1,18 +1,21 @@
 import cv2
 from pathlib import Path
 
+from lib.config import config
+
 
 class CutOuter:
     def __init__(self, root: str='../data/problem', name: str='example.png'):
         self.root = Path(root)
         self.images_path = self.root / name
         self.temp = self.root / self.images_path.stem
-        self.img = None
+        self.img = cv2.resize(
+            cv2.imread(str(self.images_path), cv2.IMREAD_GRAYSCALE),
+            dsize=(config.MODEL.INPUT_SIZE[0] * 9, config.MODEL.INPUT_SIZE[1] * 9)
+        )
 
     def cutout(self, eps=0):
         self.temp.mkdir(exist_ok=True)
-        img = cv2.imread(str(self.images_path), cv2.IMREAD_GRAYSCALE)
-        self.img = cv2.resize(img, dsize=(28 * 9, 28 * 9))
         height, width = self.img.shape
         cru = height // 9
         for y in range(9):
