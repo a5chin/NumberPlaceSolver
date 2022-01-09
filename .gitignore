@@ -1,6 +1,7 @@
 venv
-.idea
 __pycache__
+.idea
 .ipynb_checkpoints
+.DS_Store
 data
 logs
