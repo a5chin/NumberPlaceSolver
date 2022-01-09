@@ -14,6 +14,8 @@ def main():
 
     img = cutouter.img
     height, width = img.shape
+    
+    cv2.imshow('raw', img)
 
     for i, col in enumerate(data):
         for j, item in enumerate(col):

@@ -1,4 +1,5 @@
 opencv-python
+tensorboard
 torch
 torchvision
 sklearn
