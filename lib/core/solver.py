@@ -3,10 +3,10 @@ from typing import List
 
 
 class Solver:
-    def __init__(self):
+    def __init__(self) -> None:
         self.data = None
 
-    def get_result(self, data: List):
+    def get_result(self, data: List) -> List:
         self._set_num(data)
         return self.data
 

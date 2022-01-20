@@ -18,7 +18,7 @@ class NumberPlaceDataset(ImageFolder):
         self,
         root: str='../data/NumberPlaceDataset',
         transform: Optional[Callable] = None
-    ):
+    ) -> None:
         super().__init__(root, transform)
         self.root = root
         self.transform = transform

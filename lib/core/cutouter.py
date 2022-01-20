@@ -5,7 +5,7 @@ from lib.config import config
 
 
 class CutOuter:
-    def __init__(self, root: str='../data/problem', name: str='example.png'):
+    def __init__(self, root: str='../data/problem', name: str='example.png') -> None:
         self.root = Path(root)
         self.images_path = self.root / name
         self.temp = self.root / self.images_path.stem
@@ -14,7 +14,7 @@ class CutOuter:
             dsize=(config.MODEL.INPUT_SIZE[0] * 9, config.MODEL.INPUT_SIZE[1] * 9)
         )
 
-    def cutout(self, eps=0):
+    def cutout(self, eps=0) -> None:
         self.temp.mkdir(exist_ok=True)
         height, width = self.img.shape
         cru = height // 9

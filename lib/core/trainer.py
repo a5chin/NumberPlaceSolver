@@ -17,7 +17,7 @@ from lib.model import get_resnet
 
 
 class Trainer:
-    def __init__(self, cfg):
+    def __init__(self, cfg) -> None:
         self.cfg = cfg
         self.cfg.dump()
         self.root = cfg.DATASET.ROOT
@@ -38,7 +38,7 @@ class Trainer:
         self.log_dir = self.cfg.MODEL.LOG_DIR / Path(cfg.DATASET.NAME) / str(datetime.now())
         self.writer = SummaryWriter(log_dir=self.log_dir)
 
-    def train(self):
+    def train(self) -> None:
         traindataset = NumberPlaceDataset(root=self.root, transform=self.transforms['train'])
         traindataloader = DataLoader(
             dataset=traindataset,
@@ -84,7 +84,7 @@ class Trainer:
             self.writer.add_scalar('lr', lr, epoch + 1)
             self.scheduler.step(epoch + 1)
 
-    def evaluate(self, model: Optional[nn.Module], epoch: Optional[int] = None):
+    def evaluate(self, model: Optional[nn.Module], epoch: Optional[int] = None) -> None:
         valdataset = NumberPlaceDataset(root=self.root, transform=self.transforms['validation'])
         valdataloader = DataLoader(
             dataset=valdataset,
