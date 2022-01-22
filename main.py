@@ -1,13 +1,12 @@
 import cv2
-from lib.core import *
-
+from lib.core import CutOuter, Detector, Solver
 
 def main():
-    cutouter = CutOuter(root='./data/problem', name='example.png')
+    cutouter = CutOuter(root='./data/problem', name='example2.png')
     cutouter.cutout(eps=0)
 
     detector = Detector(ckpt='./logs/NumberPlaceDataset/ckpt/last_ckpt.pth')
-    data = detector.detect(dir='./data/problem/example')
+    data = detector.detect(dir='./data/problem/example2')
 
     solver = Solver()
     result = solver.get_result(data)
@@ -15,7 +14,7 @@ def main():
     img = cutouter.img
     height, width = img.shape
     
-    cv2.imshow('raw', img)
+    cv2.imshow('reshaped', img)
 
     for i, col in enumerate(data):
         for j, item in enumerate(col):

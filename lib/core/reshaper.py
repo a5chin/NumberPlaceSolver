@@ -1,32 +1,53 @@
 import numpy as np
 import cv2
+from pathlib import Path
+
+from lib.config import config
+from main import main
 
 
-gray = cv2.imread('data/problem/problem.png', cv2.IMREAD_GRAYSCALE)
-ret, th = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU)
-inv = cv2.bitwise_not(th)
-contours, hierarchy = cv2.findContours(
-    inv, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
-)
+class Reshaper:
+    LENGTH = config.MODEL.INPUT_SIZE[0]
 
-max_area = 0
+    def __init__(self, image_path: str='data/problem/example2.png') -> None:
+        self.point = np.array(
+            [[Reshaper.LENGTH * 9, 0], [0, 0], [0, Reshaper.LENGTH * 9], [Reshaper.LENGTH * 9, Reshaper.LENGTH * 9]],
+            dtype=np.float32
+        )
+        self.image_path = Path(image_path)
+        self.th = Reshaper._load_image(image_path)
+        self.square = self._get_square()
 
-for cnt in contours:
-    arclen = cv2.arcLength(cnt, True)
-    approx_cnt = cv2.approxPolyDP(cnt, epsilon=0.001 * arclen, closed=True)
-    if len(approx_cnt) == 4:
-        area = cv2.contourArea(approx_cnt)
-        if area > max_area:
-            max_area = max(area, max_area)
-            contour = approx_cnt
+    def reshape(self) -> np.ndarray:
+        mat = cv2.getPerspectiveTransform(self.square, self.point)
+        image = cv2.warpPerspective(self.th, mat, (Reshaper.LENGTH * 9, Reshaper.LENGTH * 9))
+        return image
 
-print(np.array(contour).reshape(4, -1))
-img = cv2.drawContours(inv, contour, -1, (255,255,255), 16)
+    def _get_square(self) -> np.ndarray:
+        max_area = 0
+        inv = cv2.bitwise_not(self.th)
+        contours, hierarchy = cv2.findContours(
+            inv, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+        )
+        for cnt in contours:
+            arclen = cv2.arcLength(cnt, True)
+            approx_cnt = cv2.approxPolyDP(cnt, epsilon=0.001 * arclen, closed=True)
+            if len(approx_cnt) == 4:
+                area = cv2.contourArea(approx_cnt)
+                if area > max_area:
+                    max_area = max(area, max_area)
+                    contour = approx_cnt
+        return contour.astype(np.float32)
 
-pts1 = np.array([[581, 79], [66, 192], [198, 733], [759, 571]], dtype=np.float32)
-pts2 = np.array([[800, 0], [0, 0], [0, 800], [800, 800]], dtype=np.float32)
-mat = cv2.getPerspectiveTransform(pts1, pts2)
-perspective_img = cv2.warpPerspective(img, mat, (800, 800))
+    @staticmethod
+    def _load_image(path: str) -> np.ndarray:
+        ret, th = cv2.threshold(
+            cv2.imread(path, cv2.IMREAD_GRAYSCALE),
+            0, 255, cv2.THRESH_OTSU
+        )
+        cv2.imshow('input', th)
+        return th
 
-cv2.imshow('sample', perspective_img)
-cv2.waitKey(0)
+if __name__ == '__main__':
+    reshaper = Reshaper()
+    reshaper.reshape()
