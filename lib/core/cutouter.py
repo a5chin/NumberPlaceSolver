@@ -6,7 +6,7 @@ from lib.core.reshaper import Reshaper
 
 
 class CutOuter:
-    def __init__(self, root: str='../data/problem', name: str='example.png'):
+    def __init__(self, root: str='../data/problem', name: str='example.png') -> None:
         self.root = Path(root)
         self.images_path = self.root / name
         self.temp = self.root / self.images_path.stem
@@ -17,7 +17,7 @@ class CutOuter:
         # )
         self.img = self.reshaper.reshape()
 
-    def cutout(self, eps=0):
+    def cutout(self, eps=0) -> None:
         self.temp.mkdir(exist_ok=True)
         height, width = self.img.shape
         cru = height // 9

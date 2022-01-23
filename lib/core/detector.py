@@ -3,20 +3,21 @@ import numpy as np
 import cv2
 from PIL import Image, ImageOps
 from pathlib import Path
+from typing import List
 
 from lib.core import get_transforms
 from lib.model import get_resnet
 
 
 class Detector:
-    def __init__(self, ckpt: str='../logs/NumberPlaceDataset/ckpt/best_ckpt.pth'):
+    def __init__(self, ckpt: str='../logs/NumberPlaceDataset/ckpt/best_ckpt.pth') -> None:
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         self.model = get_resnet(pretrained=False, num_classes=10)
         self.model.load_state_dict(torch.load(ckpt, map_location=torch.device(self.device)))
         self.transforms = get_transforms()
         self.table = [[0 for _ in range(9)] for _ in range(9)]
 
-    def detect(self, dir: str='../data/problem/example'):
+    def detect(self, dir: str='../data/problem/example') -> List:
         self.model.eval()
         dir = Path(dir)
         for p in dir.glob('**/*.jpg'):
