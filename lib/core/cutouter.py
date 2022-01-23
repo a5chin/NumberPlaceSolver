@@ -10,7 +10,7 @@ class CutOuter:
         self.root = Path(root)
         self.images_path = self.root / name
         self.temp = self.root / self.images_path.stem
-        self.reshaper = Reshaper(self.images_path)
+        self.reshaper = Reshaper(str(self.images_path))
         # self.img = cv2.resize(
         #     cv2.imread(str(self.images_path), cv2.IMREAD_GRAYSCALE),
         #     dsize=(config.MODEL.INPUT_SIZE[0] * 9, config.MODEL.INPUT_SIZE[1] * 9)
