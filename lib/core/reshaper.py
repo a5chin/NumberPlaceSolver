@@ -3,7 +3,6 @@ import cv2
 from pathlib import Path
 
 from lib.config import config
-from main import main
 
 
 class Reshaper:
@@ -47,7 +46,3 @@ class Reshaper:
         )
         cv2.imshow('input', th)
         return th
-
-if __name__ == '__main__':
-    reshaper = Reshaper()
-    reshaper.reshape()

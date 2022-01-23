@@ -1,5 +1,7 @@
 import cv2
+
 from lib.core import CutOuter, Detector, Solver
+
 
 def main():
     cutouter = CutOuter(root='./data/problem', name='example2.png')
