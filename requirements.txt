@@ -1,4 +1,5 @@
 opencv-python
+pulp
 tensorboard
 torch
 torchvision
