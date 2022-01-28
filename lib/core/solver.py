@@ -47,3 +47,8 @@ class Solver:
                 n = data[r3 + y][c3 + x]
                 square_data[n] = True
         return not val in square_data
+
+
+class LP:
+    def __init__(self) -> None:
+        pass
