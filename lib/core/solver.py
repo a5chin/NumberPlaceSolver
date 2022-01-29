@@ -2,10 +2,14 @@ import copy, pprint
 from typing import List
 
 
-# To Be Imroved
-class Solver:
+class Base:
     def __init__(self) -> None:
         self.data = None
+
+# To Be Imroved
+class Solver(Base):
+    def __init__(self) -> None:
+        super.__init__()
 
     def get_result(self, data: List) -> List:
         self._set_num(data)
