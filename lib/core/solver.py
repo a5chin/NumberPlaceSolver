@@ -50,6 +50,6 @@ class Solver:
         return not val in square_data
 
 
-class LP:
+class LinearProgramming:
     def __init__(self) -> None:
         pass
