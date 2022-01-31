@@ -54,6 +54,6 @@ class Solver(Base):
         return not val in square_data
 
 
-class LinearProgramming:
+class LinearProgramming(Base):
     def __init__(self) -> None:
-        pass
+        super.__init__()
