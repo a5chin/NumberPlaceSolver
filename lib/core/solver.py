@@ -7,6 +7,9 @@ class Base:
     def __init__(self) -> None:
         self.data = None
 
+    def get_result(self):
+        return self.data
+
 # To Be Imroved
 class Solver(Base):
     def __init__(self) -> None:
