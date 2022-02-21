@@ -3,10 +3,17 @@ import copy
 from typing import List
 
 
-# To Be Imroved
-class Solver:
+class Base:
     def __init__(self) -> None:
         self.data = None
+
+    def get_result(self):
+        return self.data
+
+# To Be Imroved
+class Solver(Base):
+    def __init__(self) -> None:
+        super.__init__()
 
     def get_result(self, data: List) -> List:
         self._set_num(data)
@@ -48,3 +55,8 @@ class Solver:
                 n = data[r3 + y][c3 + x]
                 square_data[n] = True
         return not val in square_data
+
+
+class LinearProgramming(Base):
+    def __init__(self) -> None:
+        super.__init__()
