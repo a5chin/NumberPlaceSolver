@@ -6,9 +6,7 @@ import numpy as np
 
 class Reshaper:
     def __init__(
-        self,
-        args,
-        image_path: str = "assets/data/problem/example2.png"
+        self, args, image_path: str = "assets/data/problem/example2.png"
     ) -> None:
         self.args = args
         self.point = np.array(

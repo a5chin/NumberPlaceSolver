@@ -12,9 +12,7 @@ from .transforms import get_transforms
 
 
 class Detector:
-    def __init__(
-        self, ckpt: str = "../assets/ckpt/best_ckpt.pth"
-    ) -> None:
+    def __init__(self, ckpt: str = "../assets/ckpt/best_ckpt.pth") -> None:
         self.device = torch.device(
             "cuda:0" if torch.cuda.is_available() else "cpu"
         )
@@ -26,8 +24,7 @@ class Detector:
         self.table = [[0 for _ in range(9)] for _ in range(9)]
 
     def detect(
-        self,
-        image_path: str = "../assets/data/problem/example"
+        self, image_path: str = "../assets/data/problem/example"
     ) -> List:
         self.model.eval()
 

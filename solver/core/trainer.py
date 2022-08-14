@@ -27,9 +27,7 @@ class Trainer:
         self.transforms = get_transforms(size=(args.size, args.size))
         self.best_acc = 0.0
         self.criterion = nn.CrossEntropyLoss()
-        self.optimizer = optim.SGD(
-            self.model.parameters(), lr=1e-3
-        )
+        self.optimizer = optim.SGD(self.model.parameters(), lr=1e-3)
         self.scheduler = scheduler.CosineLRScheduler(
             optimizer=self.optimizer,
             t_initial=self.args.epoch,

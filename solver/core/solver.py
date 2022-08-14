@@ -3,7 +3,7 @@ from typing import List
 
 
 # To Be Imroved
-class Solver():
+class Solver:
     def __init__(self) -> None:
         self.data = None
 
