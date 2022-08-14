@@ -10,12 +10,13 @@ class Reshaper:
         args,
         image_path: str = "assets/data/problem/example2.png"
     ) -> None:
+        self.args = args
         self.point = np.array(
             [
-                [Reshaper.LENGTH * 9, 0],
+                [args.size * 9, 0],
                 [0, 0],
-                [0, Reshaper.LENGTH * 9],
-                [Reshaper.LENGTH * 9, Reshaper.LENGTH * 9],
+                [0, args.size * 9],
+                [args.size * 9, args.size * 9],
             ],
             dtype=np.float32,
         )
@@ -26,7 +27,7 @@ class Reshaper:
     def reshape(self) -> np.ndarray:
         mat = cv2.getPerspectiveTransform(self.square, self.point)
         image = cv2.warpPerspective(
-            self.th, mat, (Reshaper.LENGTH * 9, Reshaper.LENGTH * 9)
+            self.th, mat, (self.args.size * 9, self.args.size * 9)
         )
         return image
 

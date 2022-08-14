@@ -25,9 +25,14 @@ class Detector:
         self.transforms = get_transforms()
         self.table = [[0 for _ in range(9)] for _ in range(9)]
 
-    def detect(self, dir: str = "../assets/data/problem/example") -> List:
+    def detect(
+        self,
+        image_path: str = "../assets/data/problem/example"
+    ) -> List:
         self.model.eval()
-        dir = Path(dir)
+
+        image_path = Path(image_path)
+        dir = image_path.parent / image_path.stem
         for p in dir.glob("**/*.jpg"):
             column, row = map(int, str(p.stem).strip(""))
 

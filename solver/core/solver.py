@@ -2,21 +2,14 @@ import copy
 from typing import List
 
 
-class Base:
+# To Be Imroved
+class Solver():
     def __init__(self) -> None:
         self.data = None
 
-    def get_result(self):
-        return self.data
-
-
-# To Be Imroved
-class Solver(Base):
-    def __init__(self) -> None:
-        super.__init__()
-
     def get_result(self, data: List) -> List:
         self._set_num(data)
+
         return self.data
 
     def _set_num(self, data: List, idx: int = 0) -> bool:
@@ -54,9 +47,4 @@ class Solver(Base):
             for y in range(3):
                 n = data[r3 + y][c3 + x]
                 square_data[n] = True
-        return not val in square_data
-
-
-class LinearProgramming(Base):
-    def __init__(self) -> None:
-        super.__init__()
+        return val not in square_data
