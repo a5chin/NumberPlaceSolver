@@ -1,4 +1,3 @@
-import pulp
 import copy
 from typing import List
 
@@ -10,6 +9,7 @@ class Base:
     def get_result(self):
         return self.data
 
+
 # To Be Imroved
 class Solver(Base):
     def __init__(self) -> None:
@@ -19,7 +19,7 @@ class Solver(Base):
         self._set_num(data)
         return self.data
 
-    def _set_num(self, data: List, idx: int=0) -> bool:
+    def _set_num(self, data: List, idx: int = 0) -> bool:
         self.data = data
         if idx >= 81:
             return True

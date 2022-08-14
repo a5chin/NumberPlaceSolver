@@ -1,7 +1,7 @@
 from lib.core import Trainer
 from lib.config import load_config
 
-cfg = load_config('experiments/resnet.yaml')
+cfg = load_config("experiments/resnet.yaml")
 
 
 def main():
@@ -9,5 +9,5 @@ def main():
     trainer.train()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

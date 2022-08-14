@@ -6,18 +6,23 @@ from random import randint
 from typing import Any, Callable, Optional, Tuple
 
 
-def draw_rect(img: np.array, eps: int=2) -> np.array:
+def draw_rect(img: np.array, eps: int = 2) -> np.array:
     rands = [randint(-eps, eps) for _ in range(4)]
     height, width, _ = img.shape
-    cv2.rectangle(img, (0 + rands[0], 0 + rands[1]), (width + rands[2], height + rands[3]), (0, 0, 0))
+    cv2.rectangle(
+        img,
+        (0 + rands[0], 0 + rands[1]),
+        (width + rands[2], height + rands[3]),
+        (0, 0, 0),
+    )
     return img
 
 
 class NumberPlaceDataset(ImageFolder):
     def __init__(
         self,
-        root: str='../data/NumberPlaceDataset',
-        transform: Optional[Callable] = None
+        root: str = "../data/NumberPlaceDataset",
+        transform: Optional[Callable] = None,
     ) -> None:
         super().__init__(root, transform)
         self.root = root
