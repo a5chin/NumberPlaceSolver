@@ -16,8 +16,8 @@ pip install -r requirements.txt
 <details>
 <summary>Demo</summary>
 
-```zsh
-python3 main.py
+```sh
+python3 examples/inference.py
 ```
 or visit [demo.ipynb](demo.ipynb)
 
@@ -27,8 +27,8 @@ or visit [demo.ipynb](demo.ipynb)
 <details>
 <summary>Training on custom data</summary>
 
-```zsh
-python3 tools/train.py
+```sh
+python3 examples/train.py
 tensorboard --logdir logs
 ```
 ### Accuracy
@@ -42,7 +42,7 @@ tensorboard --logdir logs
 <summary>Detection from image</summary>
 
 ```zsh
-python3 tools/detect.py
+python3 examplea/detect.py
 
 # 0 9 0 6 0 1 0 2 0
 # 8 0 0 0 0 0 0 0 3
