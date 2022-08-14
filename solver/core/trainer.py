@@ -41,7 +41,7 @@ class Trainer:
         self.log_dir = f"self.args.logdir/{self.root.name}"
         self.writer = SummaryWriter(log_dir=self.log_dir)
 
-    def train(self) -> None:
+    def fit(self) -> None:
         traindataset = NumberPlaceDataset(
             root=self.root, transform=self.transforms["train"]
         )

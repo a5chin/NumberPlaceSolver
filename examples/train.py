@@ -55,7 +55,7 @@ def main():
     args = make_parse()
 
     trainer = Trainer(args)
-    trainer.train()
+    trainer.fit()
 
 
 if __name__ == "__main__":

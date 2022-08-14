@@ -1,4 +1,4 @@
-from lib.core import Solver
+from solver.core import Solver
 
 
 def main():
