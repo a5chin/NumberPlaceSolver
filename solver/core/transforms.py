@@ -1,7 +1,7 @@
+from typing import Tuple
+
 from torch import randn
 from torchvision import transforms
-
-from lib.config import config
 
 
 class GaussianNoise:
@@ -18,12 +18,12 @@ class GaussianNoise:
         )
 
 
-def get_transforms() -> dict:
+def get_transforms(size: Tuple[int] = (28, 28)) -> dict:
     return {
         "train": transforms.Compose(
             [
                 transforms.RandomResizedCrop(
-                    config.MODEL.INPUT_SIZE,
+                    size=size,
                     scale=(0.08, 1.0),
                     ratio=(3 / 4, 4 / 3),
                 ),
@@ -34,9 +34,9 @@ def get_transforms() -> dict:
             ]
         ),
         "validation": transforms.Compose(
-            [transforms.Resize(config.MODEL.INPUT_SIZE), transforms.ToTensor()]
+            [transforms.Resize(size=size), transforms.ToTensor()]
         ),
         "test": transforms.Compose(
-            [transforms.Resize(config.MODEL.INPUT_SIZE), transforms.ToTensor()]
+            [transforms.Resize(size=size), transforms.ToTensor()]
         ),
     }

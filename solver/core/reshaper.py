@@ -1,14 +1,15 @@
-import numpy as np
-import cv2
 from pathlib import Path
 
-from lib.config import config
+import cv2
+import numpy as np
 
 
 class Reshaper:
-    LENGTH = config.MODEL.INPUT_SIZE[0]
-
-    def __init__(self, image_path: str = "data/problem/example2.png") -> None:
+    def __init__(
+        self,
+        args,
+        image_path: str = "assets/data/problem/example2.png"
+    ) -> None:
         self.point = np.array(
             [
                 [Reshaper.LENGTH * 9, 0],

@@ -1,17 +1,20 @@
-import cv2
 from pathlib import Path
 
-from lib.core.reshaper import Reshaper
+import cv2
+
+from .reshaper import Reshaper
 
 
 class CutOuter:
     def __init__(
-        self, root: str = "../assetsdata/problem", name: str = "example.png"
+        self,
+        args,
+        root: str = "../assets/data/problem", name: str = "example.png"
     ) -> None:
         self.root = Path(root)
         self.images_path = self.root / name
         self.temp = self.root / self.images_path.stem
-        self.reshaper = Reshaper(str(self.images_path))
+        self.reshaper = Reshaper(args, str(self.images_path))
         self.img = self.reshaper.reshape()
 
     def cutout(self, eps=0) -> None:

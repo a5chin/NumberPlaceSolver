@@ -1,12 +1,14 @@
-import torch
-import numpy as np
-import cv2
-from PIL import Image, ImageOps
 from pathlib import Path
 from typing import List
 
-from lib.core import get_transforms
-from lib.model import get_resnet
+import cv2
+import numpy as np
+import torch
+from PIL import Image, ImageOps
+
+from solver.model import get_resnet
+
+from .transforms import get_transforms
 
 
 class Detector:

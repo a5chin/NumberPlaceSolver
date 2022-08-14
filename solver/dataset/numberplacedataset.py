@@ -1,9 +1,10 @@
-import numpy as np
-import cv2
-from torchvision.datasets import ImageFolder
-from PIL import Image, ImageOps
 from random import randint
 from typing import Any, Callable, Optional, Tuple
+
+import cv2
+import numpy as np
+from PIL import Image, ImageOps
+from torchvision.datasets import ImageFolder
 
 
 def draw_rect(img: np.array, eps: int = 2) -> np.array:
@@ -21,7 +22,7 @@ def draw_rect(img: np.array, eps: int = 2) -> np.array:
 class NumberPlaceDataset(ImageFolder):
     def __init__(
         self,
-        root: str = "../data/NumberPlaceDataset",
+        root: str = "../assets/data/NumberPlaceDataset",
         transform: Optional[Callable] = None,
     ) -> None:
         super().__init__(root, transform)

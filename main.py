@@ -1,5 +1,4 @@
 import cv2
-
 from lib.core import CutOuter, Detector, Solver
 
 

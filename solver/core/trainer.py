@@ -1,49 +1,44 @@
-import datetime
-import torch
-from torch import nn, optim
-from torch.utils.data import DataLoader
-from torch.utils.tensorboard import SummaryWriter
-from timm import scheduler
-from sklearn.metrics import accuracy_score
-from tqdm import tqdm
 from collections import OrderedDict
 from pathlib import Path
 from typing import Optional
-from datetime import datetime
 
-from lib.core.transforms import get_transforms
-from lib.dataset import NumberPlaceDataset
-from lib.model import get_resnet
+import torch
+from sklearn.metrics import accuracy_score
+from timm import scheduler
+from torch import nn, optim
+from torch.utils.data import DataLoader
+from torch.utils.tensorboard import SummaryWriter
+from tqdm import tqdm
+
+from solver.dataset import NumberPlaceDataset
+from solver.model import get_resnet
+
+from .transforms import get_transforms
 
 
 class Trainer:
-    def __init__(self, cfg) -> None:
-        self.cfg = cfg
-        self.cfg.dump()
-        self.root = cfg.DATASET.ROOT
+    def __init__(self, args) -> None:
+        self.args = args
+        self.root = Path(args.root).expanduser()
         self.device = torch.device(
             "cuda:0" if torch.cuda.is_available() else "cpu"
         )
-        self.model = get_resnet(num_classes=cfg.DATASET.NUM_CLASSES)
-        self.transforms = get_transforms()
+        self.model = get_resnet(num_classes=args.num_classes)
+        self.transforms = get_transforms(size=(args.size, args.size))
         self.best_acc = 0.0
-        self.criterion = eval("nn." + self.cfg.MODEL.CRITERION)()
-        self.optimizer = eval("optim." + self.cfg.MODEL.OPTIMIZER)(
+        self.criterion = nn.CrossEntropyLoss()
+        self.optimizer = optim.SGD(
             self.model.parameters(), lr=1e-3
         )
-        self.scheduler = eval("scheduler." + self.cfg.SCHEDULER.NAME)(
+        self.scheduler = scheduler.CosineLRScheduler(
             optimizer=self.optimizer,
-            t_initial=cfg.DATASET.TOTAL_EPOCH,
-            lr_min=cfg.SCHEDULER.LR_MIN,
-            warmup_t=cfg.SCHEDULER.WARMUP_T,
-            warmup_lr_init=cfg.SCHEDULER.WARMUP_LR_INIT,
-            warmup_prefix=cfg.SCHEDULER.WARMUP_PREFIX,
+            t_initial=self.args.epoch,
+            lr_min=1e-6,
+            warmup_t=self.args.epoch / 10,
+            warmup_lr_init=1e-7,
+            warmup_prefix=True,
         )
-        self.log_dir = (
-            self.cfg.MODEL.LOG_DIR
-            / Path(cfg.DATASET.NAME)
-            / str(datetime.now())
-        )
+        self.log_dir = f"self.args.logdir/{self.root.name}"
         self.writer = SummaryWriter(log_dir=self.log_dir)
 
     def train(self) -> None:
@@ -52,18 +47,18 @@ class Trainer:
         )
         traindataloader = DataLoader(
             dataset=traindataset,
-            batch_size=self.cfg.DATASET.BATCH_SIZE,
+            batch_size=self.args.batch_size,
             shuffle=True,
             drop_last=True,
         )
 
-        for epoch in range(self.cfg.DATASET.TOTAL_EPOCH):
+        for epoch in range(self.args.epoch):
             self.model.train()
             total, running_loss, running_acc = 0, 0.0, 0.0
 
             with tqdm(traindataloader) as pbar:
                 pbar.set_description(
-                    "[Epoch %d/%d]" % (epoch + 1, self.cfg.DATASET.TOTAL_EPOCH)
+                    "[Epoch %d/%d]" % (epoch + 1, self.args.epoch)
                 )
 
                 for images, labels in pbar:
@@ -114,7 +109,7 @@ class Trainer:
         )
         valdataloader = DataLoader(
             dataset=valdataset,
-            batch_size=self.cfg.DATASET.BATCH_SIZE,
+            batch_size=self.args.batch_size,
             shuffle=False,
             drop_last=True,
         )

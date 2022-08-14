@@ -1,4 +1,4 @@
-from lib.core import CutOuter
+from solver.core import CutOuter
 
 
 def main():
