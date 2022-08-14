@@ -13,7 +13,7 @@ from .transforms import get_transforms
 
 class Detector:
     def __init__(
-        self, ckpt: str = "../logs/NumberPlaceDataset/ckpt/best_ckpt.pth"
+        self, ckpt: str = "../assets/ckpt/best_ckpt.pth"
     ) -> None:
         self.device = torch.device(
             "cuda:0" if torch.cuda.is_available() else "cpu"

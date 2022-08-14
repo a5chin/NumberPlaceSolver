@@ -16,7 +16,7 @@ def make_parse() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--ckpt",
-        default="../logs/NumberPlaceDataset/ckpt/last_ckpt.pth",
+        default="../assets/ckpt/best_ckpt.pth",
         type=str,
         help="plese set ckpt",
     )
