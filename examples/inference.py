@@ -50,7 +50,8 @@ def main():
     img = cutouter.img
     height, width = img.shape
 
-    cv2.imshow("reshaped", img)
+    raw = cv2.imread(args.image_path)
+    cv2.imshow("raw", raw)
 
     for i, col in enumerate(data):
         for j, item in enumerate(col):
