@@ -1,4 +1,14 @@
-# NumberPlaceSolver
+<div align="center">
+
+<h1>PythonPts</h1>
+
+[![Linting](https://github.com/a5chin/NumberPlaceSolver/actions/workflows/linting.yml/badge.svg)](https://github.com/a5chin/NumberPlaceSolver/actions/workflows/linting.yml)
+[![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://img.shields.io/pypi/l/ansicolortags.svg)
+
+[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://www.python.org/)
+
+</div>
+
 ## Description
 This is a tool based on ResNet-18 to analyze Number Place (Sudoku) from images.
 

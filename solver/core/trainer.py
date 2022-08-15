@@ -12,6 +12,7 @@ from tqdm import tqdm
 
 from solver.dataset import NumberPlaceDataset
 from solver.model import get_resnet
+from solver.utils import AverageMeter, get_logger
 
 from .transforms import get_transforms
 
@@ -19,6 +20,7 @@ from .transforms import get_transforms
 class Trainer:
     def __init__(self, args) -> None:
         self.args = args
+        self.logger = get_logger()
         self.root = Path(args.root).expanduser()
         self.device = torch.device(
             "cuda:0" if torch.cuda.is_available() else "cpu"
@@ -52,7 +54,9 @@ class Trainer:
 
         for epoch in range(self.args.epoch):
             self.model.train()
-            total, running_loss, running_acc = 0, 0.0, 0.0
+
+            losses = AverageMeter("train_loss")
+            accuracies = AverageMeter("train_acc")
 
             with tqdm(traindataloader) as pbar:
                 pbar.set_description(
@@ -73,21 +77,14 @@ class Trainer:
                     self.optimizer.step()
 
                     results = preds.cpu().detach().numpy().argmax(axis=1)
-                    running_acc += accuracy_score(
-                        labels.cpu().numpy(), results
-                    ) * len(images)
-                    running_loss += loss.item() * len(images)
-
-                    total += len(images)
+                    accuracies.update(
+                        accuracy_score(labels.cpu().numpy(), results)
+                    )
+                    losses.update(loss.item())
 
                     pbar.set_postfix(
-                        OrderedDict(
-                            Loss=running_loss / total, Acc=running_acc / total
-                        )
+                        OrderedDict(Loss=losses.value, Acc=accuracies.value)
                     )
-
-                running_acc /= total
-                running_loss /= total
 
             torch.save(
                 self.model.state_dict(), self.log_dir / Path("last_ckpt.pth")
@@ -99,9 +96,15 @@ class Trainer:
             self.writer.add_scalar("lr", lr, epoch + 1)
             self.scheduler.step(epoch + 1)
 
+    @torch.inference_mode
     def evaluate(
         self, model: Optional[nn.Module], epoch: Optional[int] = None
     ) -> None:
+        model.eval()
+
+        losses = AverageMeter("valid_loss")
+        accuracies = AverageMeter("valid_acc")
+
         valdataset = NumberPlaceDataset(
             root=self.root, transform=self.transforms["validation"]
         )
@@ -112,32 +115,22 @@ class Trainer:
             drop_last=True,
         )
 
-        model.eval()
-        total, val_loss, val_acc = 0, 0.0, 0.0
-        with torch.inference_mode():
-            for data in valdataloader:
-                images, labels = data
-                images, labels = images.to(self.device), labels.to(self.device)
-                preds = model(images)
-                loss = self.criterion(preds, labels)
-                results = preds.cpu().detach().numpy().argmax(axis=1)
-                val_acc += accuracy_score(labels.cpu().numpy(), results) * len(
-                    labels
-                )
-                val_loss += loss.item() * len(labels)
+        for data in valdataloader:
+            images, labels = data
+            images, labels = images.to(self.device), labels.to(self.device)
+            preds = model(images)
+            loss = self.criterion(preds, labels)
+            results = preds.cpu().detach().numpy().argmax(axis=1)
+            losses.update(loss.item())
+            accuracies.update(accuracy_score(labels.cpu().numpy(), results))
 
-                total += len(labels)
-
-            val_acc /= total
-            val_loss /= total
-
-        print("Loss: %f, Accuracy: %f" % (val_loss, val_acc))
+        self.logger.info(f"Loss: {losses.avg}, Accuracy: {accuracies.avg}")
 
         if epoch is not None:
-            self.writer.add_scalar("loss", val_loss, epoch + 1)
-            self.writer.add_scalar("accuracy", val_acc, epoch + 1)
-            if self.best_acc <= val_acc:
-                self.best_acc = val_acc
+            self.writer.add_scalar("loss", losses.avg, epoch + 1)
+            self.writer.add_scalar("accuracy", accuracies.avg, epoch + 1)
+            if self.best_acc <= accuracies.avg:
+                self.best_acc = accuracies.avg
                 torch.save(
                     model.state_dict(), self.log_dir / Path("best_ckpt.pth")
                 )

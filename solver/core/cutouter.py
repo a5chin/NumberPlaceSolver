@@ -22,7 +22,7 @@ class CutOuter:
         for y in range(9):
             for x in range(9):
                 temp = self.img[
-                    cru * x + eps: cru * (x + 1) - eps,
-                    cru * y + eps: cru * (y + 1) - eps,
+                    cru * x + eps : cru * (x + 1) - eps,
+                    cru * y + eps : cru * (y + 1) - eps,
                 ]
                 cv2.imwrite(str(self.temp / f"{x}{y}.jpg"), temp)
