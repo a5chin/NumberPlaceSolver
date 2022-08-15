@@ -1,8 +1,18 @@
-# NumberPlaceSolver
+<div align="center">
+
+<h1>PythonPts</h1>
+
+[![Linting](https://github.com/a5chin/NumberPlaceSolver/actions/workflows/linting.yml/badge.svg)](https://github.com/a5chin/NumberPlaceSolver/actions/workflows/linting.yml)
+[![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://img.shields.io/pypi/l/ansicolortags.svg)
+
+[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://www.python.org/)
+
+</div>
+
 ## Description
 This is a tool based on ResNet-18 to analyze Number Place (Sudoku) from images.
 
-<img alt='numberplacesolver.gif' src='assets/numberplacesolver.gif' width='100%'>
+<img alt='numberplacesolver.gif' src='assets/images/solver.gif' width='100%'>
 
 ## Quick Start
 <details>
@@ -16,8 +26,8 @@ pip install -r requirements.txt
 <details>
 <summary>Demo</summary>
 
-```zsh
-python3 main.py
+```sh
+python3 examples/inference.py
 ```
 or visit [demo.ipynb](demo.ipynb)
 
@@ -27,8 +37,8 @@ or visit [demo.ipynb](demo.ipynb)
 <details>
 <summary>Training on custom data</summary>
 
-```zsh
-python3 tools/train.py
+```sh
+python3 examples/train.py
 tensorboard --logdir logs
 ```
 ### Accuracy
@@ -42,7 +52,7 @@ tensorboard --logdir logs
 <summary>Detection from image</summary>
 
 ```zsh
-python3 tools/detect.py
+python3 examplea/detect.py
 
 # 0 9 0 6 0 1 0 2 0
 # 8 0 0 0 0 0 0 0 3
