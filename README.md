@@ -2,7 +2,7 @@
 ## Description
 This is a tool based on ResNet-18 to analyze Number Place (Sudoku) from images.
 
-<img alt='numberplacesolver.gif' src='assets/images/numberplacesolver.gif' width='100%'>
+<img alt='numberplacesolver.gif' src='assets/images/solver.gif' width='100%'>
 
 ## Quick Start
 <details>
