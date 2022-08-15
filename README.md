@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1>PythonPts</h1>
+<h1>NumberPlaceSolver</h1>
 
 [![Linting](https://github.com/a5chin/NumberPlaceSolver/actions/workflows/linting.yml/badge.svg)](https://github.com/a5chin/NumberPlaceSolver/actions/workflows/linting.yml)
 [![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://img.shields.io/pypi/l/ansicolortags.svg)
