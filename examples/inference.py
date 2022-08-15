@@ -1,4 +1,9 @@
 import argparse
+import sys
+from pathlib import Path
+
+current_dir = Path(__file__).resolve().parent
+sys.path.append(current_dir.as_posix() + "/../")
 
 import cv2
 
@@ -16,7 +21,7 @@ def make_parse() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--ckpt",
-        default="../assets/ckpt/best_ckpt.pth",
+        default="../assets/ckpt/last_ckpt.pth",
         type=str,
         help="plese set ckpt",
     )
