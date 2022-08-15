@@ -36,7 +36,7 @@ class Trainer:
             warmup_lr_init=1e-7,
             warmup_prefix=True,
         )
-        self.log_dir = f"self.args.logdir/{self.root.name}"
+        self.log_dir = f"{self.args.logdir}/{self.root.name}"
         self.writer = SummaryWriter(log_dir=self.log_dir)
 
     def fit(self) -> None:
