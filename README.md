@@ -6,6 +6,7 @@
 [![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://img.shields.io/pypi/l/ansicolortags.svg)
 
 [![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)](https://pytorch.org/)
 
 </div>
 
@@ -31,7 +32,7 @@ python3 examples/inference.py
 ```
 or visit [demo.ipynb](demo.ipynb)
 
-<img alt='result.png' src='assets/result.png' width='100%'>
+<img alt='result.png' src='assets/images/result.png' width='100%'>
 </details>
 
 <details>
@@ -42,10 +43,10 @@ python3 examples/train.py
 tensorboard --logdir logs
 ```
 ### Accuracy
-<img alt='assets/acc.png' src='assets/acc.png' width='100%' >
+<img alt='acc.png' src='assets/images/acc.png' width='100%' >
 
 ### Loss
-<img alt='assets/loss.png' src='assets/loss.png' width='100%' >
+<img alt='assets/loss.png' src='assets/images/loss.png' width='100%' >
 </details>
 
 <details>
