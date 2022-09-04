@@ -64,9 +64,8 @@ class Trainer:
                 )
 
                 for images, labels in pbar:
-                    images, labels = images.to(self.device), labels.to(
-                        self.device
-                    )
+                    images = images.to(self.device)
+                    labels = labels.to(self.device)
 
                     self.optimizer.zero_grad()
 
