@@ -32,7 +32,7 @@ class Reshaper:
     def _get_square(self) -> np.ndarray:
         max_area = 0
         inv = cv2.bitwise_not(self.th)
-        contours, hierarchy = cv2.findContours(
+        contours, _ = cv2.findContours(
             inv, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
         )
         for cnt in contours:
@@ -49,7 +49,7 @@ class Reshaper:
 
     @staticmethod
     def _load_image(path: str) -> np.ndarray:
-        ret, th = cv2.threshold(
+        _, th = cv2.threshold(
             cv2.imread(path, cv2.IMREAD_GRAYSCALE), 0, 255, cv2.THRESH_OTSU
         )
         cv2.imshow("input", th)
