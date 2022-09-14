@@ -26,12 +26,12 @@ jobs:
 
     - name: Test with isort
       run: |
-        isort --check solver/ examples/
+        isort --check solver/ examples/ tests/
 
     - name: Test with black
       run: |
-        black --check solver/ examples/
+        black --check solver/ examples/ tests/
 
     - name: Test with flake8
       run: |
-        flake8 solver/ examples/ --statistics --count --show-source
+        flake8 solver/ examples/ tests/ --statistics --count --show-source
