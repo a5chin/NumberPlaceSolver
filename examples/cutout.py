@@ -12,7 +12,7 @@ def make_parse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        "--image_path",
+        "--image",
         default="../assets/data/problem/example2.png",
         type=str,
         help="plese set image path",
