@@ -4,7 +4,6 @@ from typing import Dict, Tuple
 import cv2
 import numpy as np
 import torch
-from PIL import Image, ImageOps
 from torchvision import transforms
 
 
@@ -12,7 +11,6 @@ class Color2Bin:
     def __call__(self, img: np.ndarray) -> np.ndarray:
         gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         _, th = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU)
-        th = Image.fromarray(th)
 
         return th
 
@@ -23,7 +21,7 @@ class RandomDrawRect:
 
     def __call__(self, img: np.ndarray) -> np.ndarray:
         rands = [randint(-self.eps, self.eps) for _ in range(4)]
-        height, width, _ = img.shape
+        height, width = img.shape
         cv2.rectangle(
             img,
             (0 + rands[0], 0 + rands[1]),
@@ -35,8 +33,8 @@ class RandomDrawRect:
 
 
 class Invert:
-    def __call__(self, th: np.ndarray) -> Image:
-        th = ImageOps.invert(th)
+    def __call__(self, th: np.ndarray) -> np.ndarray:
+        th = cv2.bitwise_not(th)
 
         return th
 
@@ -62,6 +60,7 @@ def get_transforms(size: Tuple[int] = (28, 28)) -> Dict:
                 Color2Bin(),
                 RandomDrawRect(),
                 Invert(),
+                transforms.ToPILImage(),
                 transforms.RandomResizedCrop(
                     size=size,
                     scale=(0.08, 1.0),
@@ -70,23 +69,25 @@ def get_transforms(size: Tuple[int] = (28, 28)) -> Dict:
                 transforms.RandomRotation(degrees=10),
                 transforms.RandomPerspective(distortion_scale=0.5, p=0.5),
                 transforms.ToTensor(),
-                GaussianNoise(mean=0.0, std=0.08),
+                GaussianNoise(mean=0.0, std=0.08)
             ]
         ),
         "validation": transforms.Compose(
             [
                 Color2Bin(),
                 Invert(),
+                transforms.ToPILImage(),
                 transforms.Resize(size=size),
-                transforms.ToTensor(),
+                transforms.ToTensor()
             ]
         ),
         "test": transforms.Compose(
             [
                 Color2Bin(),
                 Invert(),
+                transforms.ToPILImage(),
                 transforms.Resize(size=size),
-                transforms.ToTensor(),
+                transforms.ToTensor()
             ]
         ),
     }

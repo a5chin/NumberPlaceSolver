@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Optional
 
 import torch
-from sklearn.metrics import accuracy_score
 from timm import scheduler
 from torch import nn, optim
 from torch.utils.data import DataLoader
@@ -75,9 +74,9 @@ class Trainer:
 
                     self.optimizer.step()
 
-                    results = preds.cpu().detach().numpy().argmax(axis=1)
+                    results = preds.cpu().detach().argmax(dim=1)
                     accuracies.update(
-                        accuracy_score(labels.cpu().numpy(), results)
+                        (results == labels).float().mean().item()
                     )
                     losses.update(loss.item())
 
@@ -95,9 +94,9 @@ class Trainer:
             self.writer.add_scalar("lr", lr, epoch + 1)
             self.scheduler.step(epoch + 1)
 
-    @torch.inference_mode
+    @torch.inference_mode()
     def evaluate(
-        self, model: Optional[nn.Module], epoch: Optional[int] = None
+        self, model: nn.Module, epoch: Optional[int] = None
     ) -> None:
         model.eval()
 
@@ -117,11 +116,13 @@ class Trainer:
         for data in valdataloader:
             images, labels = data
             images, labels = images.to(self.device), labels.to(self.device)
+
             preds = model(images)
             loss = self.criterion(preds, labels)
-            results = preds.cpu().detach().numpy().argmax(axis=1)
+
+            results = preds.cpu().detach().argmax(dim=1)
+            accuracies.update((results == labels).float().mean().item())
             losses.update(loss.item())
-            accuracies.update(accuracy_score(labels.cpu().numpy(), results))
 
         self.logger.info(f"Loss: {losses.avg}, Accuracy: {accuracies.avg}")
 

@@ -3,7 +3,5 @@ pulp
 tensorboard
 torch
 torchvision
-sklearn
 timm
 tqdm
-yacs
