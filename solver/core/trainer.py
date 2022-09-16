@@ -95,9 +95,7 @@ class Trainer:
             self.scheduler.step(epoch + 1)
 
     @torch.inference_mode()
-    def evaluate(
-        self, model: nn.Module, epoch: Optional[int] = None
-    ) -> None:
+    def evaluate(self, model: nn.Module, epoch: Optional[int] = None) -> None:
         model.eval()
 
         losses = AverageMeter("valid_loss")

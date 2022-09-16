@@ -69,7 +69,7 @@ def get_transforms(size: Tuple[int] = (28, 28)) -> Dict:
                 transforms.RandomRotation(degrees=10),
                 transforms.RandomPerspective(distortion_scale=0.5, p=0.5),
                 transforms.ToTensor(),
-                GaussianNoise(mean=0.0, std=0.08)
+                GaussianNoise(mean=0.0, std=0.08),
             ]
         ),
         "validation": transforms.Compose(
@@ -78,7 +78,7 @@ def get_transforms(size: Tuple[int] = (28, 28)) -> Dict:
                 Invert(),
                 transforms.ToPILImage(),
                 transforms.Resize(size=size),
-                transforms.ToTensor()
+                transforms.ToTensor(),
             ]
         ),
         "test": transforms.Compose(
@@ -87,7 +87,7 @@ def get_transforms(size: Tuple[int] = (28, 28)) -> Dict:
                 Invert(),
                 transforms.ToPILImage(),
                 transforms.Resize(size=size),
-                transforms.ToTensor()
+                transforms.ToTensor(),
             ]
         ),
     }
