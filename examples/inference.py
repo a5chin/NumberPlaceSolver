@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 current_dir = Path(__file__).resolve().parent
-sys.path.append(current_dir.as_posix() + "/../")
+sys.path.append(current_dir.parent.as_posix())
 
 import cv2
 
@@ -42,7 +42,7 @@ def main():
     cutouter.cutout(eps=0)
 
     detector = Detector(ckpt=args.ckpt)
-    data = detector.detect(image_path=args.image_path)
+    data = detector.detect(image_path=args.image)
 
     solver = Solver()
     result = solver.get_result(data)
@@ -50,7 +50,7 @@ def main():
     img = cutouter.img
     height, width = img.shape
 
-    raw = cv2.imread(args.image_path)
+    raw = cv2.imread(args.image)
     cv2.imshow("raw", raw)
 
     for i, col in enumerate(data):

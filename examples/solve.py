@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+
+current_dir = Path(__file__).resolve().parent
+sys.path.append(current_dir.parent.as_posix())
+
 from solver.core import Solver
 
 

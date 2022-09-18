@@ -52,5 +52,5 @@ class Reshaper:
         _, th = cv2.threshold(
             cv2.imread(path, cv2.IMREAD_GRAYSCALE), 0, 255, cv2.THRESH_OTSU
         )
-        cv2.imshow("input", th)
+
         return th
