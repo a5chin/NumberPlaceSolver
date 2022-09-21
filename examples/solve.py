@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+
+current_dir = Path(__file__).resolve().parent
+sys.path.append(current_dir.parent.as_posix())
+
 from solver.core import Solver
 
 
@@ -14,6 +20,7 @@ def main():
         [0, 1, 0, 2, 0, 4, 0, 8, 0],
     ]
     solver = Solver()
+
     result = solver.get_result(example)
 
     for res in result:

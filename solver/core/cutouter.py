@@ -10,7 +10,7 @@ class CutOuter:
         self,
         args,
     ) -> None:
-        self.image_path = Path(args.image_path)
+        self.image_path = Path(args.image)
         self.temp = self.image_path.parent / self.image_path.stem
         self.reshaper = Reshaper(args, str(self.image_path))
         self.img = self.reshaper.reshape()

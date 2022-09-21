@@ -1,9 +1,7 @@
 opencv-python
 pulp
 tensorboard
+timm
 torch
 torchvision
-sklearn
-timm
 tqdm
-yacs

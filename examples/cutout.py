@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 current_dir = Path(__file__).resolve().parent
-sys.path.append(current_dir.as_posix() + "/../")
+sys.path.append(current_dir.parent.as_posix())
 
 from solver.core import CutOuter
 
@@ -12,7 +12,7 @@ def make_parse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        "--image_path",
+        "--image",
         default="../assets/data/problem/example2.png",
         type=str,
         help="plese set image path",
