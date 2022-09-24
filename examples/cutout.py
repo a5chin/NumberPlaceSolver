@@ -29,8 +29,10 @@ def make_parse() -> argparse.ArgumentParser:
 
 def main():
     args = make_parse()
+    image_path = args.image
+    size = args.size
 
-    cutouter = CutOuter(args=args)
+    cutouter = CutOuter(image_path=image_path, size=size)
     cutouter.cutout(eps=0)
 
 

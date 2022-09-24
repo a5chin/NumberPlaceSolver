@@ -37,8 +37,10 @@ def make_parse() -> argparse.ArgumentParser:
 
 def main():
     args = make_parse()
+    image_path = args.image
+    size = args.size
 
-    cutouter = CutOuter(args=args)
+    cutouter = CutOuter(image_path=image_path, size=size)
     cutouter.cutout(eps=0)
 
     detector = Detector(ckpt=args.ckpt)
@@ -48,7 +50,7 @@ def main():
     result = solver.get_result(data)
 
     img = cutouter.img
-    height, width = img.shape
+    height, width = img.shape[:2]
 
     raw = cv2.imread(args.image)
     cv2.imshow("raw", raw)
