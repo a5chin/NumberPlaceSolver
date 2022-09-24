@@ -6,15 +6,17 @@ import numpy as np
 
 class Reshaper:
     def __init__(
-        self, args, image_path: str = "assets/data/problem/example2.png"
+        self,
+        image_path: str = "assets/data/problem/example2.png",
+        size: int = 28,
     ) -> None:
-        self.args = args
+        self.size = size
         self.point = np.array(
             [
-                [args.size * 9, 0],
+                [size * 9, 0],
                 [0, 0],
-                [0, args.size * 9],
-                [args.size * 9, args.size * 9],
+                [0, size * 9],
+                [size * 9, size * 9],
             ],
             dtype=np.float32,
         )
@@ -25,8 +27,9 @@ class Reshaper:
     def reshape(self) -> np.ndarray:
         mat = cv2.getPerspectiveTransform(self.square, self.point)
         image = cv2.warpPerspective(
-            self.th, mat, (self.args.size * 9, self.args.size * 9)
+            self.th, mat, (self.size * 9, self.size * 9)
         )
+
         return image
 
     def _get_square(self) -> np.ndarray:
@@ -45,6 +48,7 @@ class Reshaper:
                 if area > max_area:
                     max_area = max(area, max_area)
                     contour = approx_cnt
+
         return contour.astype(np.float32)
 
     @staticmethod
