@@ -14,7 +14,7 @@ class Detector:
         self.device = torch.device(
             "cuda:0" if torch.cuda.is_available() else "cpu"
         )
-        self.model = get_resnet(pretrained=False, num_classes=10)
+        self.model = get_resnet(num_classes=10, pretrained=False)
         self.model.load_state_dict(
             torch.load(ckpt, map_location=torch.device(self.device))
         )

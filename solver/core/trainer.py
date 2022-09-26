@@ -24,7 +24,7 @@ class Trainer:
         self.device = torch.device(
             "cuda:0" if torch.cuda.is_available() else "cpu"
         )
-        self.model = get_resnet(num_classes=args.num_classes)
+        self.model = get_resnet(num_classes=args.num_classes, pretrained=True)
         self.transforms = get_transforms(size=(args.size, args.size))
         self.best_acc = 0.0
         self.criterion = nn.CrossEntropyLoss()
