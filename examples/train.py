@@ -3,7 +3,11 @@ import sys
 from pathlib import Path
 
 current_dir = Path(__file__).resolve().parent
+<<<<<<< HEAD
 sys.path.append(current_dir.as_posix() + "/../")
+=======
+sys.path.append(current_dir.parent.as_posix())
+>>>>>>> 149f6c930d176f05f6dd7da1624b4a011fec2e3f
 
 from solver.core import Trainer
 

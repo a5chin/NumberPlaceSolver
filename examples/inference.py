@@ -3,7 +3,11 @@ import sys
 from pathlib import Path
 
 current_dir = Path(__file__).resolve().parent
+<<<<<<< HEAD
 sys.path.append(current_dir.as_posix() + "/../")
+=======
+sys.path.append(current_dir.parent.as_posix())
+>>>>>>> 149f6c930d176f05f6dd7da1624b4a011fec2e3f
 
 import cv2
 
@@ -14,7 +18,11 @@ def make_parse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
+<<<<<<< HEAD
         "--image_path",
+=======
+        "--image",
+>>>>>>> 149f6c930d176f05f6dd7da1624b4a011fec2e3f
         default="../assets/data/problem/example2.png",
         type=str,
         help="plese set image path for inference",
@@ -37,20 +45,37 @@ def make_parse() -> argparse.ArgumentParser:
 
 def main():
     args = make_parse()
+<<<<<<< HEAD
 
     cutouter = CutOuter(args=args)
     cutouter.cutout(eps=0)
 
     detector = Detector(ckpt=args.ckpt)
     data = detector.detect(image_path=args.image_path)
+=======
+    image_path = args.image
+    size = args.size
+
+    cutouter = CutOuter(image_path=image_path, size=size)
+    cutouter.cutout(eps=0)
+
+    detector = Detector(ckpt=args.ckpt)
+    data = detector.detect(image_path=args.image)
+>>>>>>> 149f6c930d176f05f6dd7da1624b4a011fec2e3f
 
     solver = Solver()
     result = solver.get_result(data)
 
     img = cutouter.img
+<<<<<<< HEAD
     height, width = img.shape
 
     raw = cv2.imread(args.image_path)
+=======
+    height, width = img.shape[:2]
+
+    raw = cv2.imread(args.image)
+>>>>>>> 149f6c930d176f05f6dd7da1624b4a011fec2e3f
     cv2.imshow("raw", raw)
 
     for i, col in enumerate(data):

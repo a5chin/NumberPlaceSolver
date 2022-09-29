@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Optional
 
 import torch
-from sklearn.metrics import accuracy_score
 from timm import scheduler
 from torch import nn, optim
 from torch.utils.data import DataLoader
@@ -25,7 +24,7 @@ class Trainer:
         self.device = torch.device(
             "cuda:0" if torch.cuda.is_available() else "cpu"
         )
-        self.model = get_resnet(num_classes=args.num_classes)
+        self.model = get_resnet(num_classes=args.num_classes, pretrained=True)
         self.transforms = get_transforms(size=(args.size, args.size))
         self.best_acc = 0.0
         self.criterion = nn.CrossEntropyLoss()
@@ -64,9 +63,8 @@ class Trainer:
                 )
 
                 for images, labels in pbar:
-                    images, labels = images.to(self.device), labels.to(
-                        self.device
-                    )
+                    images = images.to(self.device)
+                    labels = labels.to(self.device)
 
                     self.optimizer.zero_grad()
 
@@ -76,9 +74,9 @@ class Trainer:
 
                     self.optimizer.step()
 
-                    results = preds.cpu().detach().numpy().argmax(axis=1)
+                    results = preds.cpu().detach().argmax(dim=1)
                     accuracies.update(
-                        accuracy_score(labels.cpu().numpy(), results)
+                        (results == labels).float().mean().item()
                     )
                     losses.update(loss.item())
 
@@ -96,10 +94,8 @@ class Trainer:
             self.writer.add_scalar("lr", lr, epoch + 1)
             self.scheduler.step(epoch + 1)
 
-    @torch.inference_mode
-    def evaluate(
-        self, model: Optional[nn.Module], epoch: Optional[int] = None
-    ) -> None:
+    @torch.inference_mode()
+    def evaluate(self, model: nn.Module, epoch: Optional[int] = None) -> None:
         model.eval()
 
         losses = AverageMeter("valid_loss")
@@ -118,11 +114,13 @@ class Trainer:
         for data in valdataloader:
             images, labels = data
             images, labels = images.to(self.device), labels.to(self.device)
+
             preds = model(images)
             loss = self.criterion(preds, labels)
-            results = preds.cpu().detach().numpy().argmax(axis=1)
+
+            results = preds.cpu().detach().argmax(dim=1)
+            accuracies.update((results == labels).float().mean().item())
             losses.update(loss.item())
-            accuracies.update(accuracy_score(labels.cpu().numpy(), results))
 
         self.logger.info(f"Loss: {losses.avg}, Accuracy: {accuracies.avg}")
 

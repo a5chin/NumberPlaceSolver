@@ -2,15 +2,15 @@ from torch import nn
 from torchvision.models import resnet18
 
 
-def get_resnet(pretrained: bool = True, num_classes: int = 10) -> nn.Module:
+def get_resnet(num_classes: int = 10, pretrained: bool = True) -> nn.Module:
     model = resnet18(pretrained=pretrained)
-    conv1 = model.conv1
+
     model.conv1 = nn.Conv2d(
-        1,
-        64,
-        kernel_size=conv1.kernel_size,
-        stride=conv1.stride,
-        padding=conv1.padding,
+        in_channels=1,
+        out_channels=64,
+        kernel_size=model.conv1.kernel_size,
+        stride=model.conv1.stride,
+        padding=model.conv1.padding,
         bias=False,
     )
     model.fc = nn.Linear(
