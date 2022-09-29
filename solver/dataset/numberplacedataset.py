@@ -21,21 +21,9 @@ class NumberPlaceDataset(ImageFolder):
         sample = self.loader(path)
 
         img = np.array(sample)
-<<<<<<< HEAD
-        img = draw_rect(img)
-
-        gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-        ret, th = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU)
-        th = Image.fromarray(th)
-        th = ImageOps.invert(th)
-
-        if self.transform is not None:
-            img = self.transform(th)
-=======
 
         if self.transform is not None:
             img = self.transform(img)
->>>>>>> 149f6c930d176f05f6dd7da1624b4a011fec2e3f
         if self.target_transform is not None:
             target = self.target_transform(target)
 
