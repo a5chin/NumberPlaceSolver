@@ -16,5 +16,4 @@ def get_resnet(num_classes: int = 10, pretrained: bool = True) -> nn.Module:
     model.fc = nn.Linear(
         in_features=model.fc.in_features, out_features=num_classes
     )
-
     return model

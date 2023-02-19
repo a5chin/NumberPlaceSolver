@@ -11,7 +11,7 @@ from tqdm import tqdm
 
 from solver.dataset import NumberPlaceDataset
 from solver.model import get_resnet
-from solver.utils import AverageMeter, get_logger
+from solver.utils import AverageMeter, Logger
 
 from .transforms import get_transforms
 
@@ -19,7 +19,7 @@ from .transforms import get_transforms
 class Trainer:
     def __init__(self, args) -> None:
         self.args = args
-        self.logger = get_logger()
+        self.logger = Logger()
         self.root = Path(args.root).expanduser()
         self.device = torch.device(
             "cuda:0" if torch.cuda.is_available() else "cpu"
@@ -122,7 +122,7 @@ class Trainer:
             accuracies.update((results == labels).float().mean().item())
             losses.update(loss.item())
 
-        self.logger.info(f"Loss: {losses.avg}, Accuracy: {accuracies.avg}")
+        self.logger.log(f"Loss: {losses.avg}, Accuracy: {accuracies.avg}")
 
         if epoch is not None:
             self.writer.add_scalar("loss", losses.avg, epoch + 1)
